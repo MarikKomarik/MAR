@@ -50,17 +50,8 @@ jQuery(document).ready(function($){
 		passwordField.putCursorAtEnd();
 	});
 
-	//show forgot-password form 
-	forgotPasswordLink.on('click', function(event){
-		event.preventDefault();
-		forgot_password_selected();
-	});
-
-	//back to login from the forgot-password form
-	backToLoginLink.on('click', function(event){
-		event.preventDefault();
-		login_selected();
-	});
+	
+	
 
 	function login_selected(){
 		mainNav.children('ul').removeClass('is-visible');
@@ -88,15 +79,6 @@ jQuery(document).ready(function($){
 		formForgotPassword.addClass('is-selected');
 	}
 
-	//REMOVE THIS - it's just to show error messages 
-	formLogin.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		formLogin.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
-	formSignup.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		formSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
 
 
 	//IE9 placeholder fallback
@@ -143,3 +125,12 @@ jQuery.fn.putCursorAtEnd = function() {
     	}
 	});
 };
+
+// Адаптивное меню
+
+let jsButtonMainMenu = document.querySelector(".jsButtonMainMenu");
+let mainMenu = document.querySelector(".main-menu");
+
+jsButtonMainMenu.addEventListener("click", () => {
+  mainMenu.classList.toggle("jsMenuVisually");
+});

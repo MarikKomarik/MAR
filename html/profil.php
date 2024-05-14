@@ -1,3 +1,6 @@
+<?php
+   session_start();
+   ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -39,7 +42,7 @@
               <ul class="profil_list">
                 <li class="profil_item">
                   <p class="profil-title">Имя*</p>
-                  <p class="profil-desc">Анна Карнильева</p>
+                  <p class="profil-desc"><?php echo $_SESSION['name']?></p>
                   <hr>
                 </li>
               </ul>
@@ -48,8 +51,8 @@
                 <li class="profil_item">
                   <p class="profil-title">Район*</p>
                   <form action="areas" >
-                    <select name="area" id="area" class="areas" disabled>
-                    <option value="Vasiostovski">Василеостровский</option>
+                    <select name="area" id="area" class="areas" >
+                    <option value="">Василеостровский</option>
                     <option value="">Петроградский</option>
                     <option value="">Адмиралтейский</option>
                     <option value="">Центральный</option>
@@ -76,7 +79,10 @@
                 <li class="profil-button">
                   <button class="button">Выйти</button>
                 </li>
-                
+                <li><?php if (!empty($_SESSION['message'])) { //сообщение если что то не так
+                    echo '<p class="msg">' . $_SESSION['message'] . '</p>';
+                    unset($_SESSION['message']);
+                } ?></li>
               </ul>
               
           </div>
@@ -162,7 +168,7 @@
     </div>
 
 
-  <div class="modal-form_wrapper jsVisually-hidden">
+  <div class="modal-form_wrapper jsVisually-hidden" >
     <section class="modal-form">
       <button aria-label="Закрыть" class="jsModalClose modal-form_close">Закрыть</button>
       <p class="modal-form_heading">Создавайте свои собственные маршруты, добавляйте любимые места и делитесь ими с другими!</p>
@@ -199,17 +205,15 @@
 				<li><a href="#0">Регистрация</a></li>
 			</ul>
 			<div id="cd-login"> <!-- форма входа -->
-				<form class="cd-form">
+				<form action="../phpscripts/testreg.php" method="post" class="cd-form">
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="signin-email" type="email" placeholder="E-mail">
-						<span class="cd-error-message">Здесь сообщение об ошибке!</span>
+						<input class="full-width has-padding has-border" name="login" id="signin-email" type="email" placeholder="E-mail">
 					</p>
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signin-password">Пароль</label>
-						<input class="full-width has-padding has-border" id="signin-password" type="text"  placeholder="Пароль">
+						<input class="full-width has-padding has-border"  name="password" id="signin-password" type="password"  placeholder="Пароль">
 						<a href="#0" class="hide-password"></a>
-						<span class="cd-error-message">Здесь сообщение об ошибке!</span>
 					</p>
 			
 					<p class="fieldset">
@@ -219,22 +223,20 @@
 				
 			</div> <!-- конец блока с формой входа -->
 			<div id="cd-signup"> <!-- блок с формой регистрации -->
-			   <form class="cd-form">
+			   <form action="../phpscripts/save_user.php" method="post" class="cd-form">
 				  <p class="fieldset">
 					 <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
-					 <input class="full-width has-padding has-border" id="signup-username" type="text" placeholder="Имя пользователя">
-					 <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+					 <input class="full-width has-padding has-border"  name="name" id="signup-username" type="text" placeholder="Имя пользователя">
 				  </p>
 				  <p class="fieldset">
 					  <label class="image-replace cd-email" for="signup-email">E-mail</label>
-					  <input class="full-width has-padding has-border" id="signup-email" type="email" placeholder="E-mail">
-					  <span class="cd-error-message">Здесь сообщение об ошибке!</span>
+					  <input class="full-width has-padding has-border" name="login" id="signup-email" type="email" placeholder="E-mail">
+					  <span class="cd-error-message">тест</span>
 				   </p>
 				   <p class="fieldset">
 					   <label class="image-replace cd-password" for="signup-password">Пароль</label>
-					   <input class="full-width has-padding has-border" id="signup-password" type="text"  placeholder="Пароль">
+					   <input class="full-width has-padding has-border"  name="password" id="signup-password" type="password"  placeholder="Пароль">
 					   <a href="#0" class="hide-password"></a>
-					   <span class="cd-error-message">Здесь сообщение об ошибке!</span>
 					</p>
 					
 					<p class="fieldset">

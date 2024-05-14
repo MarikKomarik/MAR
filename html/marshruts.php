@@ -1,3 +1,13 @@
+<?php 
+session_start();
+include("../phpscripts/bdconnect.php");
+if(!$_SESSION['id']){
+    $user_id=$_SESSION['id'];
+}
+$userid = $_SESSION['id'];
+    $routes = mysqli_query($bdconnect, "SELECT * FROM `routes`");
+    $routes = mysqli_fetch_all($routes);
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,21 +41,29 @@
     <section class="types_marshruts">
 
         <div class="types_marshruts-item">
+        <?php 
+    foreach ($routes as $route) {
+       
 
+?>
             <div class="row"> 
 
                 <div class="col-6">
                     <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Камчатка Виктора Цоя"</h2>
+                    <!-- Название маршрута -->
+                        <h2 class="types_marshruts-heading"><?= $route[1] ?></h2>
                     </a>
-                    <p class="types_marshruts-lead">Маршрут проходит мимо Заячьего, Артилерийского островов, по Кронвеской набережной и покажет множество красивых мест Петроградского района </p>
+                    <!-- Описание маршрута -->
+                    <p class="types_marshruts-lead"> <?= $route[4] ?></p>
                     <ul class="types_marshruts-list">
                         <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
+                            <!-- Сколько км -->
+                            <span class="types_marshruts-head-numbers"><?= $route[5] ?></span>километров
                             длиной
                         </li>
                         <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
+                            <!-- Сколько часов -->
+                            <span class="types_marshruts-head-numbers"><?= $route[6] ?></span>часов
                             длительность
                         </li>
                     </ul>
@@ -55,14 +73,15 @@
 
                 <div class="col-1">
                     <ul class="types_marshruts-slides">
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/1.svg" alt="">Инженерный дом</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/2.svg" alt="">Музей политической истории России</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/3.svg" alt="">Место казни декабристов</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/4.svg" alt="">Сквер Виктора Цоя</li>
+                        <?php $points = explode(",",$route[2] );
+ foreach ($points as $point) {
+    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[0]);
+    $qery = mysqli_fetch_assoc($qery); 
+    echo '<li class="types_marshruts-slide">
+    <img class="types-icon" src="'.$qery['pathtoicon'].'" alt="">'.$qery['name'].'</li>';
+}
+                        ?>
+                        
                     </ul>
                 </div>
 
@@ -71,19 +90,17 @@
 
                 <div class="swiper typesSwiper">
                     <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/02.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
+                    <?php $points = explode(",",$route[2] );
+ foreach ($points as $point) {
+    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[0]);
+    $qery = mysqli_fetch_assoc($qery); 
+    echo '<div class="swiper-slide">
+    <img src="'.$qery['pathtophoto'].'" alt="фото" class="types_marshruts-image">
+</div>';
+ }
+    ?>
+                        
+                       
                     </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>   
@@ -92,204 +109,13 @@
             </div>
                 
         </div>
+        <?php 
+    }
+?>
 
+        
 
-
-        <div class="types_marshruts-item">
-
-            <div class="row"> 
-
-                <div class="col-6-1">
-                    <div class="swiper typesSwiper">
-                        <div class="swiper-wrapper">
-
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/06.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
-                    
-
-            </div>
-
-
-            <div class="col-1">
-                <ul class="types_marshruts-slides">
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/8.svg" alt="">Набережная лейтенанта Шмидта</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/9.svg" alt="">Ледокол Красин</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/10.svg" alt="">Река Смоленка</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/11.svg" alt="">Лютеранский Михайловский собор</li>
-                </ul>
-            </div>
-
-
-            <div class="col-4">
-                <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Увлекательный остров”</h2>
-                    </a>
-                    <p class="types_marshruts-lead">Хотите спокойно прогуляться и насладиться природой Санкт-Петербурга? Этот маршрут прекрасно подоойдёт вам и поразит своей атмосферой!</p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
-                            длительность
-                        </li>
-                    </ul>
-            </div>
-                
-        </div>
-
-
-
-        <div class="types_marshruts-item">
-
-            <div class="row"> 
-
-                <div class="col-6">
-                    <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Петербург за 1 день”</h2>
-                    </a>
-                    <p class="types_marshruts-lead">В маршруте “Петерург за 1 день” собраны все главные места и достопримечательности, чтобы успеть увидеть весь город!</p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
-                            длительность
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="col-1">
-                    <ul class="types_marshruts-slides">
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/13.svg" alt="">Финдлянский
-                            вокзал</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/14.svg" alt="">Иоанновский 
-                            мост</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/15.svg" alt="">Биржевый
-                            мост</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/16.svg" alt="">Адмиралтейская
-                            набережная</li>
-                    </ul>
-                </div>
-
-
-            <div class="col-4">
-
-                <div class="swiper typesSwiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/02.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
-                
-            </div>
-                
-        </div>
-
-
-
-        <div class="types_marshruts-item">
-
-            <div class="row"> 
-
-                <div class="col-6-1">
-                    <div class="swiper typesSwiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/02.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/01.jpg" alt="фотофото" class="types_marshruts-image">
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
-                    
-            </div>
-
-            <div class="col-1">
-                <ul class="types_marshruts-slides">
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/17.svg" alt="">Дворцовая 
-                        площадь</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/18.svg" alt="">Казанский 
-                        собор</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/19.svg" alt="">Исакиевский
-                        собор</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/20.svg" alt="">Медный
-                        всадник</li>
-                </ul>
-            </div>
-
-
-            <div class="col-4">
-                <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Маршрут по Крюкову каналу”</h2>
-                    </a>
-                    <p class="types_marshruts-lead">Маршрут проходит по набережным двух центральных каналов Санкт-Петербурга: Крюкову каналу и каналу Грибоедова, а также вдоль реки Мойки. Он покорит вас не только своими достопримечательностями, но и своими красивыми мостами и фасадами зданий. </p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">1,16</span>часов
-                            длительность
-                        </li>
-                    </ul>
-            </div>
-                
-        </div>
+       
 
     </section>
     
