@@ -49,7 +49,7 @@ $userid = $_SESSION['id'];
             <div class="row"> 
 
                 <div class="col-6">
-                    <a href="#" class="types_marshruts-head">
+                    <a href="/html/route.php?id=<?= $route[0] ?>" class="types_marshruts-head">
                     <!-- Название маршрута -->
                         <h2 class="types_marshruts-heading"><?= $route[1] ?></h2>
                     </a>
