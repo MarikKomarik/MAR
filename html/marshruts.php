@@ -1,7 +1,7 @@
 <?php 
 session_start();
 include("../phpscripts/bdconnect.php");
-if(!$_SESSION['id']){
+if($_SESSION['id']){
     $user_id=$_SESSION['id'];
 }
 $userid = $_SESSION['id'];
@@ -66,8 +66,10 @@ $userid = $_SESSION['id'];
                             <span class="types_marshruts-head-numbers"><?= $route[5] ?></span>часов
                             длительность
                         </li>
-                    <form  id="form"> 
-                    <p><input type="submit" id='bottom' class="bottom"  name="submit" value="Добавить в избранное"></p>
+                    <form  class="form" id="form"> 
+                    <input type="hidden" name="route_id" value= "<?=$route[0]?>" >
+                    <input type="hidden" name="user_id" value= "<?=$user_id?>" >
+                    <input type="submit" id='button' class="button"  name="submit" value="Добавить в избранное">
                     </form>
                     </ul>
                     
@@ -243,8 +245,33 @@ $userid = $_SESSION['id'];
 
     <script src="./../js/main.js"></script>
     <script src="./../js/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
      <!-- Initialize Swiper -->
   <script>
+     $(document).ready(function () {
+        $(".form").submit(function (e) { // Устанавливаем событие отправки для формы с класс=form
+           e.preventDefault();
+            var form_data = $(this).serialize();
+            var $text= $(this).closest(".col-6").find(".types_marshruts-heading").text();
+            $.ajax({
+              
+                type: "POST", // Метод отправки
+                url: "../phpscripts/addToFavorites.php", // Путь до php файла отправителя
+                data: form_data,
+                success: function () {
+                    // Код в этом блоке выполняется при успешной отправке сообщения
+                    alert("Маршрут '"+$text+" '  Успешно добавлен в избранное");
+                },
+
+                error: function () {
+        // Код в этом блоке выполняется при ошибке отправки сообщения
+        alert("Произошла ошибка. Маршрут '"+$text+"' не был добавлен в избранное");
+    }
+            });
+            
+        });
+    });    
     var swiper = new Swiper(".typesSwiper", {
         navigation: {
         nextEl: ".swiper-button-next",

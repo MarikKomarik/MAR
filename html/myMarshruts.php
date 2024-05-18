@@ -68,6 +68,10 @@ foreach ($id_routes as $id_route) {
                     <span class="types_marshruts-head-numbers"><?= $route['hours'] ?></span>часов
                     длительность
                 </li>
+                <form  class="form" id="form"> 
+                    <input type="hidden" name="id" value= "<?=$id_route[0]?>" >
+                    <input type="submit" id='button' class="button"  name="submit" value="Удалить из избранного">
+                    </form>
             </ul>
             
         </div>
@@ -213,8 +217,40 @@ echo '<div class="swiper-slide">
 
     <script src="./../js/main.js"></script>
     <script src="./../js/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
      <!-- Initialize Swiper -->
   <script>
+     $(document).ready(function () {
+        $(".form").submit(function (e) { // Устанавливаем событие отправки для формы с класс=form
+           e.preventDefault();
+           var $row = event.target.closest('.row'); // Находим ближайший родительский элемент с классом 'row'
+            var form_data = $(this).serialize();
+            var $text= $(this).closest(".col-6").find(".types_marshruts-heading").text();
+            let $vopros = confirm("Вы дейтсвительно хотите удалить '"+$text+"' из избранного?");
+            if ($vopros){
+            $.ajax({
+              
+                type: "POST", // Метод отправки
+                url: "../phpscripts/delToFavorites.php", // Путь до php файла отправителя
+                data: form_data,
+                success: function () {
+                    // Код в этом блоке выполняется при успешной отправке сообщения
+                    alert("Маршрут '"+$text+" '  Успешно удален из избранного");
+    $row.style.display = 'none'; // Скрываем найденный элемент
+                },
+
+                error: function () {
+        // Код в этом блоке выполняется при ошибке отправки сообщения
+        alert("Произошла ошибка. Маршрут '"+$text+"' не был удален из избранного");
+        $row.style.display = 'none'; // Скрываем найденный элемент
+      
+    }
+            });
+          }
+            
+        });
+    });    
     var swiper = new Swiper(".typesSwiper", {
         navigation: {
         nextEl: ".swiper-button-next",
