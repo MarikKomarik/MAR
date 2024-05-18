@@ -1,3 +1,13 @@
+<?php 
+session_start();
+include("../phpscripts/bdconnect.php");
+if($_SESSION['id']){
+    $userid = $_SESSION['id'];
+    $id_routes = mysqli_query($bdconnect, "SELECT * FROM `favorites` WHERE `user_id` =". $userid);
+    $id_routes = mysqli_fetch_all($id_routes);
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,209 +37,92 @@
             <p class="inner-first-screen_lead">Выбирай любую категорию маршрутов, сохраняй себе, чтобы не забыть пройти именно его и наслаждайся видами и историей мимо проходящих мест! </div>
     </section> 
 
-
     <section class="types_marshruts">
 
-        <div class="types_marshruts-item">
+<div class="types_marshruts-item">
+<?php 
+if($_SESSION['id']){
+ 
+foreach ($id_routes as $id_route) {
+  $route=mysqli_query($bdconnect, "SELECT * FROM `routes` WHERE `id` =". $id_route[1]);
+  $route = mysqli_fetch_assoc($route);
 
-            <div class="row"> 
+?>
+    <div class="row"> 
 
-                <div class="col-6">
-                    <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Камчатка Виктора Цоя"</h2>
-                    </a>
-                    <p class="types_marshruts-lead">Маршрут проходит мимо Заячьего, Артилерийского островов, по Кронвеской набережной и покажет множество красивых мест Петроградского района </p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
-                            длительность
-                        </li>
-                    </ul>
-                    
-                </div>
-
-
-                <div class="col-1">
-                    <ul class="types_marshruts-slides">
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/1.svg" alt="">Инженерный дом</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/2.svg" alt="">Музей политической истории России</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/3.svg" alt="">Место казни декабристов</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/4.svg" alt="">Сквер Виктора Цоя</li>
-                    </ul>
-                </div>
-
-
-            <div class="col-4">
-
-                <div class="swiper typesSwiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/02.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
-                
-            </div>
-                
+        <div class="col-6">
+            <a href="/html/route.php?id=<?= $route['id'] ?>" class="types_marshruts-head">
+            <!-- Название маршрута -->
+                <h2 class="types_marshruts-heading"><?= $route['name'] ?></h2>
+            </a>
+            <!-- Описание маршрута -->
+            <p class="types_marshruts-lead"> <?= $route['discription'] ?></p>
+            <ul class="types_marshruts-list">
+                <li class="types_marshruts-numbers"> 
+                    <!-- Сколько км -->
+                    <span class="types_marshruts-head-numbers"><?= $route['length'] ?></span>километров
+                    длиной
+                </li>
+                <li class="types_marshruts-numbers"> 
+                    <!-- Сколько часов -->
+                    <span class="types_marshruts-head-numbers"><?= $route['hours'] ?></span>часов
+                    длительность
+                </li>
+            </ul>
+            
         </div>
 
 
-
-        <div class="types_marshruts-item">
-
-            <div class="row"> 
-
-                <div class="col-6-1">
-                    <div class="swiper typesSwiper">
-                        <div class="swiper-wrapper">
-
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/06.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                            </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
-                    
-
-            </div>
-
-
-            <div class="col-1">
-                <ul class="types_marshruts-slides">
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/21.svg" alt="">Двор 
-                        со слонами </li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/22.svg" alt="">Синий
-                        петух</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/23.svg" alt="">Сквер 
-                        Виктора Цоя</li>
-                    <li class="types_marshruts-slide">
-                        <img class="types-icon" src="./../img/src/icons/24.svg" alt="">Мансарда 
-                        художников</li>
-                </ul>
-            </div>
-
-
-            <div class="col-4">
-                <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Соврменное искусство на улицах Питера”</h2>
-                    </a>
-                    <p class="types_marshruts-lead">Надоели барокко, классицизм и ампир? Выход есть! Предлагаем прогуляться по улицам города, которые являются представителями современного искусства Санкт-Петербурга</p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
-                            длительность
-                        </li>
-                    </ul>
-            </div>
+        <div class="col-1">
+            <ul class="types_marshruts-slides">
+                <?php 
+                $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route['id']);
+                $points = mysqli_fetch_all($searchpoints);
+foreach ($points as $point) {
+$qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
+$qery = mysqli_fetch_assoc($qery); 
+echo '<li class="types_marshruts-slide">
+<img class="types-icon" src="'.$qery['pathtoicon'].'" alt="">'.$qery['name'].'</li>';
+}
+                ?>
                 
+            </ul>
         </div>
 
 
+    <div class="col-4">
 
-        <div class="types_marshruts-item">
-
-            <div class="row"> 
-
-                <div class="col-6">
-                    <a href="#" class="types_marshruts-head">
-                        <h2 class="types_marshruts-heading">“Доходный остров”</h2>
-                    </a>
-                    <p class="types_marshruts-lead">В этом мрашруте вы увидите самые красивые доходные дома Сантк-Петербурга, пройдётесь по Лопухинскому саду и почувствуете атмосферу Каменноостровского проспекта</p>
-                    <ul class="types_marshruts-list">
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">5 </span>километров
-                            длиной
-                        </li>
-                        <li class="types_marshruts-numbers"> 
-                            <span class="types_marshruts-head-numbers">4-6 </span>часов
-                            длительность
-                        </li>
-                    </ul>
-
-                </div>
-
-                <div class="col-1">
-                    <ul class="types_marshruts-slides">
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/25.svg" alt="">Каменноостровский проспект</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/26.svg" alt="">Дом эмира 
-                            Бухарского</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/27.svg" alt="">Доходный дом А.Ф.Циммермана</li>
-                        <li class="types_marshruts-slide">
-                            <img class="types-icon" src="./../img/src/icons/28.svg" alt="">Доходный дом
-                            К.В.Маркова</li>
-                    </ul>
-                </div>
-
-
-            <div class="col-4">
-
-                <div class="swiper typesSwiper">
-                    <div class="swiper-wrapper">
-
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/04.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/03.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/02.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                        <div class="swiper-slide">
-                            <img src="./../img/src/pictures/01.jpg" alt="фото" class="types_marshruts-image">
-                        </div>
-                    </div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>   
-                </div>
+        <div class="swiper typesSwiper">
+            <div class="swiper-wrapper">
+            <?php $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route['id']);
+                $points = mysqli_fetch_all($searchpoints);
+foreach ($points as $point) {
+$qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
+$qery = mysqli_fetch_assoc($qery); 
+echo '<div class="swiper-slide">
+<img src="'.$qery['pathtophoto'].'" alt="фото" class="types_marshruts-image">
+</div>';
+}
+?>
                 
+               
             </div>
-                
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>   
         </div>
+        
+    </div>
+        
+</div>
+<?php 
+}}
+?>
 
-    </section>
-    
 
+
+
+
+</section>
 
 
     <div class="container_footer">
@@ -314,34 +207,7 @@
     </div>
 
 
-  <div class="modal-form_wrapper jsVisually-hidden">
-    <section class="modal-form">
-      <button aria-label="Закрыть" class="jsModalClose modal-form_close">Закрыть</button>
-      <p class="modal-form_heading">Создавайте свои собственные маршруты, добавляйте любимые места и делитесь ими с другими!</p>
-      <form action="send.php" class="form-modal-form">
-
-        <div class="form-inner_wrapper">
-          <label for="name" class="form_label">
-            Название маршрута*
-            <input name="name" id="name" type="text" class="form_input">
-          </label>
-          <label for="width" class="form_label">
-            Протяжённость маршрута*
-            <input name="width" id="width" type="text" class="form_input">
-        </label>
-        </div>
-        <label for="text" class="form_label">
-          Описание*
-          <textarea name="opisanie" id="text" cols="30" rows="5" class="form_textarea"></textarea>
-        </label>
-
-        <div class="form-button_wrapper">
-          <button class="button">Создать маршрут</button>
-        </div>
-        
-      </form>
-    </section>
-  </div>
+  
   
 
 

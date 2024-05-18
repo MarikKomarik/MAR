@@ -54,18 +54,21 @@ $userid = $_SESSION['id'];
                         <h2 class="types_marshruts-heading"><?= $route[1] ?></h2>
                     </a>
                     <!-- Описание маршрута -->
-                    <p class="types_marshruts-lead"> <?= $route[4] ?></p>
+                    <p class="types_marshruts-lead"> <?= $route[3] ?></p>
                     <ul class="types_marshruts-list">
                         <li class="types_marshruts-numbers"> 
                             <!-- Сколько км -->
-                            <span class="types_marshruts-head-numbers"><?= $route[5] ?></span>километров
+                            <span class="types_marshruts-head-numbers"><?= $route[4] ?></span>километров
                             длиной
                         </li>
                         <li class="types_marshruts-numbers"> 
                             <!-- Сколько часов -->
-                            <span class="types_marshruts-head-numbers"><?= $route[6] ?></span>часов
+                            <span class="types_marshruts-head-numbers"><?= $route[5] ?></span>часов
                             длительность
                         </li>
+                    <form  id="form"> 
+                    <p><input type="submit" id='bottom' class="bottom"  name="submit" value="Добавить в избранное"></p>
+                    </form>
                     </ul>
                     
                 </div>
@@ -73,9 +76,11 @@ $userid = $_SESSION['id'];
 
                 <div class="col-1">
                     <ul class="types_marshruts-slides">
-                        <?php $points = explode(",",$route[2] );
+                        <?php 
+                        $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route[0]);
+                        $points = mysqli_fetch_all($searchpoints);
  foreach ($points as $point) {
-    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[0]);
+    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
     $qery = mysqli_fetch_assoc($qery); 
     echo '<li class="types_marshruts-slide">
     <img class="types-icon" src="'.$qery['pathtoicon'].'" alt="">'.$qery['name'].'</li>';
@@ -90,9 +95,10 @@ $userid = $_SESSION['id'];
 
                 <div class="swiper typesSwiper">
                     <div class="swiper-wrapper">
-                    <?php $points = explode(",",$route[2] );
+                    <?php $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route[0]);
+                        $points = mysqli_fetch_all($searchpoints);
  foreach ($points as $point) {
-    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[0]);
+    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
     $qery = mysqli_fetch_assoc($qery); 
     echo '<div class="swiper-slide">
     <img src="'.$qery['pathtophoto'].'" alt="фото" class="types_marshruts-image">

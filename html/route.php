@@ -5,7 +5,8 @@ if (!empty($_GET['id'])) {
     $id = $_GET['id'];
     $route = mysqli_query($bdconnect, "SELECT * FROM `routes` WHERE `id` =". $id);
     $route = mysqli_fetch_assoc($route);
-    $points = explode(",",$route['points'] );
+    $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route['id']);
+    $points = mysqli_fetch_all($searchpoints);
   }
   
 ?>
@@ -31,7 +32,7 @@ if (!empty($_GET['id'])) {
             <?php 
             if(!empty($points)){
                 foreach ($points as $point) { 
-                    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[0]);
+                    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
                 $qery = mysqli_fetch_assoc($qery); 
                    echo '"'.$qery['coordinates'].'",';
                 }
@@ -68,7 +69,7 @@ ymaps.ready(init);
             width: 100%; height: 100%; padding: 0; margin: 0;
         }
         #map {
-            width: 70%; height: 70%; padding: 0; margin: 0;
+            width: 50%; height: 70%; padding: 0; margin: 0;
             margin-left: auto;
     margin-right: auto;
         }
@@ -87,14 +88,56 @@ ymaps.ready(init);
                 <li class="inner-first-screen_breadcrumbs_item">Главная</li>
                 <li class="inner-first-screen_breadcrumbs_item">Маршруты</li>
             </ul>
-            <h1 class="inner-first-screen_heading">НАЗВАНИЕ</h1>
+            <h1 class="inner-first-screen_heading"><?= $route['name'] ?></h1>
         </div>
         
 
         
     </section> 
-
+     <div class="sidebar">
+    <h3>Содержание</h3>
+    <ul> 
+    <li><a href="#map">Карта маршрута</a></li>
+    <?php 
+            if(!empty($points)){
+                $i=65;
+                foreach ($points as $point) { 
+                    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
+                $qery = mysqli_fetch_assoc($qery); 
+                   echo '<li><a href="#'.$qery['name'].'">'.$qery['name'].' - &#'.$i.';'.'</a></li>';
+                   $i=$i+1;
+                }
+                
+            }
+            ?>
+    </ul>
+  </div>
+    <section class="place">
+        <h2 class="place-header">
+            Карта маршрута<hr></h2>
+    </section>
+    <!-- Карта -->
     <div id="map"></div>
+    <?php 
+            if(!empty($points)){
+                foreach ($points as $point) { 
+                    $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
+                $qery = mysqli_fetch_assoc($qery); 
+                $int = 101;
+                   echo '<section class="place" id="'.$qery['name'].'">
+                   <h2 class="place-header">'.
+                   $qery['name'].'<hr></h2>
+                   <div class="place-about">'.$qery['description'] .'
+                   </div>
+                   <div class="place-foto">
+                       <img src="'.$qery['pathtophoto'].'" alt="foto">
+                   </div>
+               </section> ';
+                }
+                
+            }
+            ?>
+    
     <?php
   include("footer.php");
   ?>
