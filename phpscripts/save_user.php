@@ -22,17 +22,17 @@
    if (empty($login) or empty($password) or empty($name)) 
    {
       $_SESSION['message'] = 'Заполните все поля';
-      header('Location: ../html/profil.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
    }
    if (!preg_match("/^(([a-zA-Z' -]{1,30})|([а-яА-ЯЁёІіЇїҐґЄєыЫйЙ' -]{1,30}))$/u",$name)) {
        $_SESSION['message'] = "Введите корректное имя";
-       header('Location: ../html/profil.php');
+         header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
     }
     if (!filter_var($login, FILTER_VALIDATE_EMAIL)) {
       $_SESSION['message'] = "Некорректно введён email";
-       header('Location: ../html/profil.php');
+         header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
      }
    $login = stripslashes($login);//обрабатываем их, чтобы теги и скрипты не работали
@@ -47,7 +47,7 @@
    $myrow = mysqli_fetch_array($result);
    if (!empty($myrow['id'])) {
       $_SESSION['message'] = 'Логин занят';
-      header('Location: ../html/profil.php');
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
       exit;
    }
    // если такого нет, то сохраняем данные
@@ -55,9 +55,9 @@
    // Проверяем, есть ли ошибки
    if ($result2 == 'TRUE') {
       $_SESSION['message'] = 'Вы успешно зарегестрированы';
-      header('Location: ../index.php');
+      header("Location: " . $_SERVER["HTTP_REFERER"]);
    } else {
       $_SESSION['message'] = 'Ошибка';
-      header('Location: ../html/profil.php');
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
    }
    ?>

@@ -1,10 +1,10 @@
 <?php 
 session_start();
 include("../phpscripts/bdconnect.php");
-if($_SESSION['id']){
-    $user_id=$_SESSION['id'];
+if(isset($_SESSION['id'])){
+  $user_id = $_SESSION['id'];
+  $userid = $_SESSION['id'];
 }
-$userid = $_SESSION['id'];
     $routes = mysqli_query($bdconnect, "SELECT * FROM `routes`");
     $routes = mysqli_fetch_all($routes);
 ?>

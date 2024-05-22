@@ -1,5 +1,6 @@
 <?php
    session_start();
+include("../phpscripts/bdconnect.php");
    ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,12 +11,12 @@
     <link rel="shortcut icon" href="./../img/src/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="./../swiper-bundle.min.css">
     <link rel="stylesheet" href="./../style.css"/>
-    <script src="./../js/modernizr.js"></script> <!-- Modernizr -->
   </head>
   <body>
   <?php
   include("header.php");
   ?>
+  
     <section class="inner-first-screen">
 
         <img src="./../img/src/fonGL.jpg" alt="fon"class="main-image" >
@@ -30,8 +31,6 @@
         
         
     </section> 
-
-
     
   <section class="profil">
 
@@ -77,7 +76,7 @@
                 <a class="cd-signin" href="#0">Sign in</a>
                 </li>
                 <li class="profil-button">
-                  <button class="button">Выйти</button>
+                  <button class="button cd-signin">Выйти</button>
                 </li>
                 <li><?php if (!empty($_SESSION['message'])) { //сообщение если что то не так
                     echo '<p class="msg">' . $_SESSION['message'] . '</p>';
@@ -196,64 +195,7 @@
       </form>
     </section>
   </div>
-  
-
-  <div class="cd-user-modal"> <!-- все формы на фоне затемнения-->
-		<div class="cd-user-modal-container"> <!-- основной контейнер -->
-			<ul class="cd-switcher">
-				<li><a href="#0">Вход</a></li>
-				<li><a href="#0">Регистрация</a></li>
-			</ul>
-			<div id="cd-login"> <!-- форма входа -->
-				<form action="../phpscripts/testreg.php" method="post" class="cd-form">
-					<p class="fieldset">
-						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" name="login" id="signin-email" type="email" placeholder="E-mail">
-					</p>
-					<p class="fieldset">
-						<label class="image-replace cd-password" for="signin-password">Пароль</label>
-						<input class="full-width has-padding has-border"  name="password" id="signin-password" type="password"  placeholder="Пароль">
-						<a href="#0" class="hide-password"></a>
-					</p>
-			
-					<p class="fieldset">
-						<input class="full-width" type="submit" value="Войти">
-					</p>
-				</form>                             
-				
-			</div> <!-- конец блока с формой входа -->
-			<div id="cd-signup"> <!-- блок с формой регистрации -->
-			   <form action="../phpscripts/save_user.php" method="post" class="cd-form">
-				  <p class="fieldset">
-					 <label class="image-replace cd-username" for="signup-username">Имя пользователя</label>
-					 <input class="full-width has-padding has-border"  name="name" id="signup-username" type="text" placeholder="Имя пользователя">
-				  </p>
-				  <p class="fieldset">
-					  <label class="image-replace cd-email" for="signup-email">E-mail</label>
-					  <input class="full-width has-padding has-border" name="login" id="signup-email" type="email" placeholder="E-mail">
-					  <span class="cd-error-message">тест</span>
-				   </p>
-				   <p class="fieldset">
-					   <label class="image-replace cd-password" for="signup-password">Пароль</label>
-					   <input class="full-width has-padding has-border"  name="password" id="signup-password" type="password"  placeholder="Пароль">
-					   <a href="#0" class="hide-password"></a>
-					</p>
-					
-					<p class="fieldset">
-						<input class="full-width has-padding" type="submit" value="Создать аккаунт">
-					</p>
-				</form>
-					<!-- <a href="#0" class="cd-close-form">Закрыть</a> -->
-			</div> <!-- cd-signup -->
-			
-					<a href="#0" class="cd-close-form">Закрыть</a>
-			</div> <!-- cd-user-modal-container -->
-	 </div> <!-- cd-user-modal -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-    <script src="./../js/main.js"></script>
     <script src="./../js/swiper-bundle.min.js"></script>
-
-  </script>
+   
   </body>
 </html>

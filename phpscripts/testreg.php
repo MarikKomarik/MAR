@@ -15,7 +15,7 @@ if (isset($_POST['password'])) {
 if (empty($login) or empty($password)) 
 {
     $_SESSION['message'] = 'Заполните все поля';
-    header('Location: ../html/profil.php');
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
     exit;
 }
 $login = stripslashes($login);
@@ -31,7 +31,7 @@ $result = mysqli_query($bdconnect, "SELECT * FROM users WHERE login='$login'");
 $myrow = mysqli_fetch_array($result);
 if (empty($myrow['password'])) {
     //если пользователя с введенным логином не существует
-    header('Location: ../html/profil.php');
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
     $_SESSION['message'] = 'Пользователя не существует';
     exit;
 } else {
@@ -43,10 +43,10 @@ if (empty($myrow['password'])) {
         $_SESSION['id'] = $myrow['id']; //эти данные будет "носить с собой" вошедший пользователь
         $_SESSION['area'] = $myrow['area'];
         $_SESSION['message'] = 'Вы успешно вошли';
-        header('Location: ../html/profil.php');
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
     } else {//если пароли не сошлись
         $_SESSION['message'] = 'Неверный пароль.';
-        header('Location: ../html/profil.php');
+        header("Location: " . $_SERVER["HTTP_REFERER"]);
         exit;
     }
 }

@@ -129,30 +129,7 @@ echo '<div class="swiper-slide">
 </section>
 
 
-    <div class="container_footer">
-      <footer class="main-footer">
-          <div class="logo-footer">
-            <img src="./../img/src/logo-footer.svg" alt="logo" class="logo__img" />
-          </div>
-        <ul class="main-menu">
-          <li class="main-menu__item">
-            <a href="./categories.html" class="main-menu__link">КАТЕГОРИИ</a>
-          </li>
-          <li class="main-menu__item">
-            <a href="./marshruts.html" class="main-menu__link">МАРШРУТЫ</a>
-          </li>
-          <li class="main-menu__item">
-            <a href="./../index2.html" class="main-menu__link">ГЛАВНАЯ</a>
-          </li>
-          <li class="main-menu__item">
-            <a href="#" class="main-menu__link">МОИ МАРШРУТЫ</a>
-          </li>
-          <li class="main-menu__item">
-            <a href="#" class="main-menu__link">ПРОФИЛЬ</a>
-          </li>
-        </ul>
-    </footer>
-  </div>
+    
 
 
     <div class="main-footer_last-line">
