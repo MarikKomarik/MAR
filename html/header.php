@@ -22,6 +22,9 @@ session_start();
           <li class="main-menu__item">
             <a href="/html/myMarshruts.php" class="main-menu__link">МОИ МАРШРУТЫ</a>
           </li>
+          <li class="main-menu__item">
+            <a href="/html/createroute.php" class="main-menu__link">СОЗДАТЬ МАРШРУТ</a>
+          </li>
           <!-- <li class="main-menu__item">
             <a href="/html/profil.php" class="main-menu__link">ПРОФИЛЬ</a>
           </li> -->
@@ -44,6 +47,13 @@ session_start();
     foreach ($favor as $route) {
 $k++;
     }
+
+    $favor = mysqli_query($bdconnect, "SELECT * FROM `users_routes` WHERE `user_id` =". $usid);
+    $favor = mysqli_fetch_all($favor);
+    $i=0;
+    foreach ($favor as $route) {
+$i++;
+    }
          ?> 
            <div class="dropdown">
               <button onclick="myFunction()" class="dropbtn"><?=$namedig?></button>
@@ -51,7 +61,7 @@ $k++;
               <a href="#"><?=$name?></a>
                 <a href="#"><?=$login?></a>
                 <a href="#">Сохраненных маршрутов:<?=$k?></a>
-                <a href="#">Созданных маршрутов: 3</a>
+                <a href="#">Созданных маршрутов:<?=$i?></a>
                 <a class="logout" href="/phpscripts/logout.php">Выйти</a>
               </div>
             </div> <?php } else{?>
@@ -94,7 +104,6 @@ $k++;
 				  <p class="fieldset">
 					  <label class="image-replace cd-email" for="signup-email">E-mail</label>
 					  <input class="full-width has-padding has-border" name="login" id="signup-email" type="email" placeholder="E-mail">
-					  <span class="cd-error-message">тест</span>
 				   </p>
 				   <p class="fieldset">
 					   <label class="image-replace cd-password" for="signup-password">Пароль</label>

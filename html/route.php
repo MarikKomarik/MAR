@@ -5,7 +5,17 @@ if (!empty($_GET['id'])) {
     $id = $_GET['id'];
     $route = mysqli_query($bdconnect, "SELECT * FROM `routes` WHERE `id` =". $id);
     $route = mysqli_fetch_assoc($route);
+    $routename = $route["name"];
     $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `route_id` = ".$route['id']);
+    $points = mysqli_fetch_all($searchpoints);
+  }
+
+  if (!empty($_GET['usid'])) {
+    $id = $_GET['usid'];
+    $route = mysqli_query($bdconnect, "SELECT * FROM `users_routes` WHERE `id` =". $id);
+    $route = mysqli_fetch_assoc($route);
+    $routename=$route['name'];
+    $searchpoints = mysqli_query($bdconnect, "SELECT * FROM `route_points` WHERE `user_route_id` = ".$route['id']);
     $points = mysqli_fetch_all($searchpoints);
   }
   
@@ -88,7 +98,7 @@ ymaps.ready(init);
                 <li class="inner-first-screen_breadcrumbs_item">Главная</li>
                 <li class="inner-first-screen_breadcrumbs_item">Маршруты</li>
             </ul>
-            <h1 class="inner-first-screen_heading"><?= $route['name'] ?></h1>
+            <h1 class="inner-first-screen_heading"><?=$routename?></h1>
         </div>
         
 
