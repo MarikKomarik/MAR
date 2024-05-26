@@ -58,6 +58,7 @@ if (!empty($_GET['id'])) {
         // Автоматически устанавливать границы карты так, чтобы маршрут был виден целиком.
         boundsAutoApply: true
     });
+    
     // Создаем карту 
     var myMap = new ymaps.Map('map', {
         center: [59.938991, 30.315473],
@@ -66,7 +67,7 @@ if (!empty($_GET['id'])) {
     }, {
         buttonMaxWidth: 300
     });
-
+    myMap.behaviors.disable('drag');
     // Добавляем мультимаршрут на карту.
     myMap.geoObjects.add(multiRoute);
 }
@@ -122,32 +123,35 @@ ymaps.ready(init);
             ?>
     </ul>
   </div>
+ 
     <section class="place">
         <h2 class="place-header">
             Карта маршрута<hr></h2>
     </section>
     <!-- Карта -->
     <div id="map"></div>
+    <div class="container"   >
     <?php 
             if(!empty($points)){
                 foreach ($points as $point) { 
                     $qery = mysqli_query($bdconnect, "SELECT * FROM `points` WHERE `id` =". $point[3]);
                 $qery = mysqli_fetch_assoc($qery); 
                 $int = 101;
-                   echo '<section class="place" id="'.$qery['name'].'">
-                   <h2 class="place-header">'.
+                   echo '<div class="route" id="'.$qery['name'].'">
+                   <h2 class="route-header">'.
                    $qery['name'].'<hr></h2>
-                   <div class="place-about">'.$qery['description'] .'
+                   <div class="route-description">'.$qery['description'] .'
                    </div>
-                   <div class="place-foto">
-                       <img src="'.$qery['pathtophoto'].'" alt="foto">
+                   <div>
+                       <img class="route-image" src="'.$qery['pathtophoto'].'" alt="photo">
                    </div>
-               </section> ';
+               </div> ';
                 }
                 
             }
             ?>
     
+  </div>
     <?php
   include("footer.php");
   ?>

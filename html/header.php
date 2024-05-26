@@ -10,17 +10,20 @@ session_start();
         </button>
         <ul class="main-menu">
         <li class="main-menu__item">
+        <img  class="footer-logo-black" src="../img/src/icons/logoprojectsblack.svg" alt="Логотип">
+          </li>
+        <li class="main-menu__item">
             <a href="/index.php" class="main-menu__link">ГЛАВНАЯ</a>
           </li>
           <li class="main-menu__item">
             <a href="/html/categories.php" class="main-menu__link">КАТЕГОРИИ</a>
           </li>
           <li class="main-menu__item">
-            <a href="/html/marshruts.php" class="main-menu__link">МАРШРУТЫ</a>
+            <a href="/html/routes.php" class="main-menu__link">МАРШРУТЫ</a>
           </li>
          
           <li class="main-menu__item">
-            <a href="/html/myMarshruts.php" class="main-menu__link">МОИ МАРШРУТЫ</a>
+            <a href="/html/myRoutes.php" class="main-menu__link">МОИ МАРШРУТЫ</a>
           </li>
           <li class="main-menu__item">
             <a href="/html/createroute.php" class="main-menu__link">СОЗДАТЬ МАРШРУТ</a>

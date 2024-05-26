@@ -146,7 +146,7 @@ if($_SESSION['id']){
           </label>
           <label for="width" class="form_label">
             Точки маршрута - (1,4,3)*
-            <input name="points" id="width" type="text" class="form_input">
+            <input name="points" id="width" type="text" class="form_input" placeholder="Через запятую">
         </label>
         </div>
         <div id="ymap3" ></div>   
